@@ -61,9 +61,25 @@ function deleteUser(data) {
 	}
 }
 
+function getUser(data) {
+	const gettinguser = user_records.some((items) => {
+		if (items.id == data.id) {
+			finduser = items;
+			return finduser;
+		}
+	});
+	if (gettinguser) {		
+		return commonfun("200", "OK", 'User data load Successfully..!', finduser);
+		console.log()
+	}
+	else {
+		return commonfun("200", "OK", "No User Found..!");
+	}
+}
 
 module.exports = {
 	addUser,
 	deleteUser,
+	getUser,
 	commonfun
 }
