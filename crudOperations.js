@@ -18,11 +18,11 @@ function addUser(data) {
 	let msg;
 	const userData = JSON.parse(data);
 	user_records.some(items => {
-		flag = 0;
+		flag = false;
 		if (items.id != userData.id) {
 			if (items.name != userData.name) {
 				if (items.email != userData.email) {
-					flag = 1;
+					flag = true;
 				} else {
 					msg = "mail is not matched";
 				}
@@ -35,7 +35,7 @@ function addUser(data) {
 			msg = "Id is not matched";
 		}
 	})
-	if (flag == 1) {
+	if (flag) {
 		user_records.push(userData);
 		fs.writeFileSync(db, JSON.stringify(user_records))
 		return commonfun(200, 'Ok', 'User added Successfully');

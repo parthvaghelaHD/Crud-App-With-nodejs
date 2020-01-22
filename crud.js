@@ -43,5 +43,5 @@ const server = http.createServer((req, res) => {
       break;
   }
 }).listen(port, () => {
-  console.log(`Server running at ${port}/`);
+  console.log(`Server running at ${port} `);
 });
