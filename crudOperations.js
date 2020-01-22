@@ -1,8 +1,6 @@
 const fs = require('fs');
 const db = 'data.json';
-let flag = 0, userRecord = '';
 const user_records = JSON.parse(fs.readFileSync(db));
-const userArray = user_records.map((items) => { return items; });
 
 function commonfun(statusCode, status, message, data = "") {
 	let stats = {
@@ -49,7 +47,6 @@ function deleteUser(data) {
 	const deleteRecord = user_records.splice(user_records.findIndex(() => {
 		return data.id;
 	}), 1);
-
 	if (deleteRecord == 1) {
 		fs.writeFileSync(db, JSON.stringify(user_records));
 		return commonfun("200", "OK", 'User Deleted Successfully..!');
