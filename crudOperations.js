@@ -52,7 +52,8 @@ function deleteUser(data) {
 	const deleteRecord = user_records.splice(user_records.findIndex(() => {
 		return data.id;
 	}), 1);
-	if (deleteRecord) {		
+
+	if (deleteRecord == 1) {		
 		fs.writeFileSync(db, JSON.stringify(user_records));
 		return commonfun("200", "OK", 'User Deleted Successfully..!');
 	}
