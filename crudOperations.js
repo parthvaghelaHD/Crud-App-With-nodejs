@@ -17,7 +17,7 @@ function commonfun(statusCode, status, message, data = "") {
 function addUser(data) {
 	const userData = JSON.parse(data);
 	let msg;
-	user_records.forEach(items => {
+	user_records.some(items => {
 		flag = 0;
 		if (items.id === userData.id) {
 			msg = 'id is already exist..!';
@@ -53,7 +53,7 @@ function deleteUser(data) {
 		return data.id;
 	}), 1);
 
-	if (deleteRecord == 1) {		
+	if (deleteRecord == 1) {
 		fs.writeFileSync(db, JSON.stringify(user_records));
 		return commonfun("200", "OK", 'User Deleted Successfully..!');
 	}
@@ -69,9 +69,36 @@ function getUser(data) {
 			return finduser;
 		}
 	});
-	if (gettinguser) {		
+	if (gettinguser) {
 		return commonfun("200", "OK", 'User data load Successfully..!', finduser);
 		console.log()
+	}
+	else {
+		return commonfun("200", "OK", "No User Found..!");
+	}
+}
+
+function updateUser(data) {
+	const update = user_records.some((dbitems) => {
+		if (dbitems.id == data.id) {
+			Object.keys(data).forEach((items) => {
+				if (items == 'name') {
+					if (data.name != "") {
+						dbitems.name = data.name;
+					}
+				}
+				if (items == 'email') {
+					if (data.email != "") {
+						dbitems.email = data.email;
+					}
+				}
+			});
+		}
+		return true;
+	});
+	if (update) {
+		fs.writeFileSync(db, JSON.stringify(user_records));
+		return commonfun("200", "OK", "User Updated successfully..!");
 	}
 	else {
 		return commonfun("200", "OK", "No User Found..!");
@@ -81,6 +108,7 @@ function getUser(data) {
 module.exports = {
 	addUser,
 	deleteUser,
+	updateUser,
 	getUser,
 	commonfun
 }
