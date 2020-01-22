@@ -15,32 +15,29 @@ function commonfun(statusCode, status, message, data = "") {
 }
 
 function addUser(data) {
-	const userData = JSON.parse(data);
 	let msg;
+	const userData = JSON.parse(data);
 	user_records.some(items => {
 		flag = 0;
-		if (items.id === userData.id) {
-			msg = 'id is already exist..!';
-		} else if (items.name == userData.name) {
-			msg = 'email is already exist..!';
-		} else if (items.email == userData.email) {
-			msg = 'contact is already exist..!';
-		}
-
 		if (items.id != userData.id) {
 			if (items.name != userData.name) {
 				if (items.email != userData.email) {
 					flag = 1;
+				} else {
+					msg = "mail is not matched";
 				}
+
+			} else {
+				msg = "name is not matched";
 			}
 		}
+		else {
+			msg = "Id is not matched";
+		}
 	})
-
-	if (flag = 1) {
-		userArray.push(userData);
-		fs.writeFile(db, JSON.stringify(userArray), function (err) {
-			if (err) return commonfun("502", "Error", err);
-		});
+	if (flag == 1) {
+		user_records.push(userData);
+		fs.writeFileSync(db, JSON.stringify(user_records))
 		return commonfun(200, 'Ok', 'User added Successfully');
 	}
 	else {

@@ -15,8 +15,6 @@ const server = http.createServer((req, res) => {
         res.end(userOperations.addUser(body));
       });
       break;
-
-
     case ('/delete', 'DELETE'):
       req.on('data', function (data) {        
         body = body + data;
@@ -25,8 +23,6 @@ const server = http.createServer((req, res) => {
         res.end(userOperations.deleteUser(JSON.parse(body)));
       });
       break;
-
-
     case ('/edit', 'PUT'):
       req.on('data', function (data) {
         body = body + data;
